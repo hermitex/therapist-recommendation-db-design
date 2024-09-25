@@ -361,6 +361,4 @@ CREATE TABLE Client_Preferences (
 - Normalization of degrees, specializations, and languages reduces redundancy and allows a therapist to have multiple degrees, certifications, and areas of expertise.
 - **Client_Preferences** and **Reviews** are linked to therapists for better matching and feedback collection.
 
----
 
-This schema provides a scalable, normalized structure, ensuring efficient storage and retrieval of therapist profile information.
