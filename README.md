@@ -122,10 +122,25 @@ This table stores promotions and discount codes.
 
 ### **Automated Matching Algorithm**
 
-- To enable an automated matching algorithm, you'll need to join multiple tables based on criteria such as:
-  - Therapist availability
-  - Specializations that match client needs
-  - Client demographic preferences
-  - Insurance and financial compatibility.
+The automated matching algorithm will draw data from multiple tables to match clients with therapists based on their preferences and needs. Here’s the design we envision:
 
-This schema ensures a fully normalized structure where each piece of data is stored once and referenced appropriately. The tables can be extended as the application evolves to accommodate more details or attributes as necessary.
+#### **Key Steps for Matching Algorithm**
+
+1. **Client Inputs**: Collect client preferences on gender, age, specialization, language, insurance coverage, session type (in-person/telehealth), appointment availability, etc.
+
+2. **Database Queries**:
+   - **Therapist Availability**: Query the **Therapist_Availability** and **Availability** tables to ensure the therapist is available at the desired time or has capacity (i.e., isn't fully booked).
+   - **Demographic Preferences**: Match therapist demographic information in the **Demographics** and **Languages_Spoken** tables with the client's preferences (e.g., language preference, gender preference).
+   - **Specialization Matching**: Use the **Specializations** table to ensure the therapist specializes in the area the client is seeking (e.g., anxiety, depression, trauma).
+   - **Therapeutic Approach Matching**: Look into the **Therapeutic_Approach** table to see if the therapist uses a modality or approach the client prefers (e.g., Cognitive Behavioral Therapy, Psychodynamic therapy).
+   - **Insurance Matching**: Cross-check the **Insurance_Coverage** table to verify that the therapist accepts the client’s insurance provider.
+   - **Location Matching**: Use the **Therapist_Location** table to match clients based on location preferences (e.g., therapists available in a specific city or offering telehealth).
+   - **Session Rate and Discounts**: Match financial preferences based on the **Therapy_Logistics** and **Promo_Discounts** tables for session affordability.
+
+3. **Scoring System**:
+   - Implement a **scoring system** to rank therapists based on how well they match client criteria. For example, each matched criterion (e.g., gender, specialization, availability, insurance) could is assigned a weight, and therapists will be ranked based on their total score.
+   - A matching threshold where only therapists with a score above a certain value (e.g., 80%) are shown to the client.
+
+4. **Filter and Sort**:
+   - **Filters**: Clients to filter therapists by criteria like availability, price, and distance (if location-based).
+   - **Sort**: Present the results to clients based on the matching score or specific criteria like the lowest cost, highest rating, or closest availability.
